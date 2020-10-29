@@ -10,13 +10,13 @@ from the command line.
 The workflow to demonstrate the functionality associated with this daemon matches the specifications in the assignment as such:
 ```
 On localhost:
-    # cd dns-spoofing-daemon
+    # cd dns-spoof
     # make
-    # make check 
-    # ./dnsspoof
+    # make check
+    # ./dnsspoof -p 123
 
 Other terminal:
-    # dig @localhost foo.com
+    # dig -p 123 @localhost foo.com
 ```
 This should return the following response:
 TODO Modify if response approximates assignment more closely.
