@@ -20,11 +20,3 @@ clean:
 .PHONY: test
 test:
 	$(cc) $(test) $(src) $(flags) $(cunit) -D UNIT_TEST -o $(test-target)
-
-.PHONY: debug
-debug:
-	$(cc) $(src) $(flags) -D DEBUG -o $(target)
-
-.PHONY: test-debug
-test-debug:
-	$(cc) $(test) $(src) $(flags) $(cunit) -D UNIT_TEST -D TEST-DEBUG -o $(test-target)
