@@ -1,6 +1,6 @@
 /**
- * TODO Block comment
- * http://cunit.sourceforge.net/example.html
+ * Test the functions associated with the dns_manager function that handles
+ * modifying the message buffer in place and accessing its values.
  */
 
 #include <stdio.h>
@@ -31,7 +31,7 @@ int initialize_dns_manager_test_suite(void)
 }
 
 /** 
- * TODO DOCSTRING
+ * Close down the DNS manager test suite.
  */
 int cleanup_dns_manager_test_suite(void)
 {
@@ -46,7 +46,7 @@ void test_add_answers(void) {
 
 }
 /** 
- * TODO DOCSTRING
+ * TODO 
  */
 void test_parse_message(void) {
 
