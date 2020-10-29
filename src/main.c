@@ -63,7 +63,6 @@ void process_incoming_data(int sock, char *default_address_response)
         }
         ssize_t new_message_size = parse_message(current_packet, received_message_size, default_address_response);
         // If we get some received packet, we can go ahead and respond with it.
-        fprintf(stderr, "The value of a : %zu", new_message_size);
         if (new_message_size > DNS_HEADER_SIZE) {
             // TODO Modify this command
           if (sendto(sock, current_packet, new_message_size, 0, (struct sockaddr *)&client_sin, (socklen_t)(client_sin_len)) != new_message_size)
@@ -72,7 +71,7 @@ void process_incoming_data(int sock, char *default_address_response)
           }
         }
         else {
-          fprintf(stderr, "Message failed , dropping message\n");
+          fprintf(stderr, "Message is too small , dropping message\n");
         }
         number_of_packets++;
     }

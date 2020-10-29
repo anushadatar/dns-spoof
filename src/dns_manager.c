@@ -14,26 +14,17 @@ ssize_t add_answers(uint8_t *message, uint16_t message_qd, ssize_t message_size,
 {
     // The total response size, offset by the header.
     ssize_t response_size = DNS_HEADER_SIZE;
+    
     // Keep track of the current position within the message.
     uint16_t positions[DNS_MAX_QUESTIONS];
 
     // Go through all of the questions and update the response size accordingly.
-    for (uint8_t i = 0; i < message_qd; i++) {
+    for (uint8_t question_number = 0; question_number < message_qd; question_number++) {
         // Keep response size so far within the qustions.
-        positions[i] = response_size;
-        int name_size = 0;
-        uint8_t *current_question = message + response_size;
-        while(current_question[name_size] > 0 && name_size <= DNS_NAME_MAX_SIZE) {
-            name_size += current_question[name_size];
-            // Shift over to the next value.
-             name_size += 1;
-        }
-        if (name_size < DNS_NAME_MAX_SIZE) {
-            return name_size + 1;
-        }
-    return -1;
+        positions[question_number] = response_size;
 
-        // Ensure the name size is valid and then add it to the response.
+        // Ensure the name size is valid and then add it to the response size.
+        int name_size = get_name_size(response_size + message);        
         if (name_size < 0) {
             set_format_error_flags(message);
             return message_size;
@@ -46,7 +37,7 @@ ssize_t add_answers(uint8_t *message, uint16_t message_qd, ssize_t message_size,
             set_not_implemented_flags(message);
             return message_size;
         }
-    
+
         // The next value is the question class, ensure we support that.
         uint16_t question_class = ntohs(*(uint16_t *)(message + response_size + sizeof(uint16_t)));
         if (question_class != DNS_RR_CLASS_ANY && question_class != DNS_RR_CLASS_IN) {
@@ -60,11 +51,13 @@ ssize_t add_answers(uint8_t *message, uint16_t message_qd, ssize_t message_size,
     }
 
     // Go through and add to the answers section.
-    for (uint8_t i = 0; i < message_qd; i++) {
-        positions[i] |= 0xC000;  // TODO Find spec reference for this.
+    for (uint8_t answer_number = 0; answer_number < message_qd; answer_number++) {
+        positions[answer_number] |= 0xC000;  // TODO Find spec reference for setting these high.
+    
         // Add the response length so far.
-        *(uint16_t *)(message + response_size) = htons(positions[i]);
+        *(uint16_t *)(message + response_size) = htons(positions[answer_number]);
         response_size += sizeof(uint16_t);
+    
         // Add the resource record types.
         *(uint16_t *)(message + response_size) = htons(DNS_RR_TYPE_A);
         *(uint16_t *)(message + response_size + sizeof(uint16_t)) = htons(DNS_RR_CLASS_IN);
@@ -128,7 +121,7 @@ void set_not_implemented_flags(uint8_t *message)
 {
     uint16_t flags = get_dns_flags(message);
     flags &= ~DNS_FLAG_RCODE_MASK;
-    flags = DNS_FLAG_QR | DNS_FLAG_RCODE_NOT_IMPLEMENTED;
+    flags = DNS_FLAG_QR | DNS_FLAG_RCODE_FORMAT_ERROR;
     set_dns_flags(message, flags);
 }
 
