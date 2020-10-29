@@ -6,7 +6,6 @@ Testing ->
 - Make testing README
 
 Functionality ->
-- Figure out how to set flags as outlined in expected output
 - Add error checks
 - Test!
 - TODOs in the code
