@@ -15,3 +15,4 @@ Documentation ->
 - Write up README
 - Add docs to code
 - Style check
+- Formalize DEBUG prints

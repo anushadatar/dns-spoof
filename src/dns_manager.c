@@ -136,7 +136,7 @@ void set_format_error_flags(uint8_t *message)
 {
     uint16_t flags = get_dns_flags(message);
     flags &= ~DNS_FLAG_RCODE_MASK;
-    flags = DNS_FLAG_QR | DNS_FLAG_RCODE_NOT_IMPLEMENTED;
+    flags = DNS_FLAG_QR | DNS_FLAG_RCODE_FORMAT_ERROR;
     set_dns_flags(message, flags);
 }
 
