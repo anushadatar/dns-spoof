@@ -1,0 +1,17 @@
+Testing ->
+- Collect wireshark traces and get sample packet
+- Make DNS manager tests based on real wireshark packet
+- Create end-to-end test for main
+- Debug end-to-end test with main
+- Make testing README
+
+Functionality ->
+- Figure out how to set flags as outlined in expected output
+- Add error checks
+- Test!
+- TODOs in the code
+
+Documentation ->
+- Write up README
+- Add docs to code
+- Style check
