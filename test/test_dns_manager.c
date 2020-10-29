@@ -7,13 +7,9 @@
 #include <string.h>
 #include "CUnit/Basic.h"
 
+// Include files needed from sources.
 #include "../src/dns_defns.h"
 #include "../src/dns_manager.h"
-
-bool debug = false;
-#ifdef TEST_DEBUG
-    debug = true;
-#endif
 
 // General-purpose buffer used by tests. Used Wireshark sample DNS capture
 // https://wiki.wireshark.org/SampleCaptures and generated integer values
@@ -26,7 +22,7 @@ uint8_t test_message[] = {
 };
 
 /**
- * TODO Comment
+ * Start the DNS manager test suite.
  */
 int initialize_dns_manager_test_suite(void)
 {
@@ -55,9 +51,12 @@ void test_add_answers(void) {
 void test_parse_message(void) {
 
 }
+
 /** 
- * TODO DOCSTRING
- * TODO maybe convert flag values to hex/ debug why that doesn't work outright
+ * Test setting the DNS flags to impl error by changing the value to 
+ * the impl error and confirming it matches the expected value.
+ * This test directly leverages the get function, so this test should
+ * follow the get test suite.
  */
 void test_set_not_implemented_flags(void) {
     uint16_t expected_not_implemented_flags = 32769;
@@ -67,8 +66,10 @@ void test_set_not_implemented_flags(void) {
 }
 
 /** 
- * TODO DOCSTRING
- * TODO maybe convert flag values to hex/ debug why that doesn't work outright
+ * Test setting the DNS flags to format error by changing the value to 
+ * the format error and confirming it matches the expected value.
+ * This test directly leverages the get function, so this test should
+ * follow the get test suite.
  */
 void test_set_format_error_flags(void) {
     uint16_t expected_format_error_flags = 32772;
@@ -79,8 +80,10 @@ void test_set_format_error_flags(void) {
 }
 
 /** 
- * TODO DOCSTRING
- * TODO maybe convert flag values to hex/ debug why that doesn't work outright
+ * Test setting the DNS flags to the default by changing the value to 
+ * the default and confirming it matches the expected value.
+ * This test directly leverages the get function, so this test should
+ * follow the get test suite.
  */
 void test_set_default_dns_flags(void) {
     uint16_t expected_default_flags = 33792;
@@ -89,7 +92,9 @@ void test_set_default_dns_flags(void) {
     CU_ASSERT_EQUAL(expected_default_flags, extracted_dns_flags);
 }
 
-/** TODO ENTIRE DOCSTRING
+/** 
+ * Test getting the name size of a known query by computing the name size of
+ * the first (and only) query in a known request and comparing it to the known value.
  * 
  * Note that this only tests getting a name size with a single question, an
  * extension of this test could validate this function behaves as expected
@@ -104,7 +109,8 @@ void test_get_name_size(void) {
 }
 
 /** 
- * TODO DOCSTRING
+ * Test getting the DNS ID by comparing it to the
+ * known value of the test message. 
  */
 void test_get_dns_id(void) {
     uint16_t expected_dns_id = 4146;
@@ -113,7 +119,11 @@ void test_get_dns_id(void) {
 }
 
 /** 
- * TODO DOCSTRING
+ * Test setting the DNS ID by changing the value,
+ * confirming it matches the expected value, changing it back to the original
+ * value, and confirming that the value matches the original.
+ * This test directly leverages the get function, so this test should
+ * follow the get test suite.
  */
 void test_set_dns_id(void) {
     uint16_t new_expected_dns_id = 4147;
@@ -129,7 +139,8 @@ void test_set_dns_id(void) {
 }
 
 /** 
- * TODO DOCSTRING
+ * Test getting the DNS flags by comparing it to the
+ * known value of the test message. 
  */
 void test_get_dns_flags(void) {
     uint16_t expected_dns_flags = 0x0100;
@@ -139,7 +150,11 @@ void test_get_dns_flags(void) {
 }
 
 /** 
- * TODO DOCSTRING
+ * Test setting the DNS flags by changing the value,
+ * confirming it matches the expected value, changing it back to the original
+ * value, and confirming that the value matches the original.
+ * This test directly leverages the get function, so this test should
+ * follow the get test suite.
  */
 void test_set_dns_flags(void) {
     uint16_t new_expected_dns_flags = 0x0120;
@@ -156,7 +171,8 @@ void test_set_dns_flags(void) {
 }
 
 /** 
- * TODO DOCSTRING
+ * Test getting the DNS question count by comparing it to the
+ * known value of the test message. 
  */
 void test_get_dns_qdcount(void) {
     uint16_t expected_dns_qdcount = 1;
@@ -165,7 +181,11 @@ void test_get_dns_qdcount(void) {
 }
 
 /** 
- * TODO DOCSTRING
+ * Test setting the DNS questions count by changing the value,
+ * confirming it matches the expected value, changing it back to the original
+ * value, and confirming that the value matches the original.
+ * This test directly leverages the get function, so this test should
+ * follow the get test suite.
  */
 void test_set_dns_qdcount(void) {
     uint16_t new_expected_dns_qdcount = 2;
@@ -181,7 +201,8 @@ void test_set_dns_qdcount(void) {
 }
 
 /** 
- * TODO DOCSTRING
+ * Test getting the DNS answer count by comparing it to the
+ * known value of the test message.
  */
 void test_get_dns_ancount(void) {
     uint16_t expected_dns_ancount = 0;
@@ -190,7 +211,11 @@ void test_get_dns_ancount(void) {
 }
 
 /** 
- * TODO DOCSTRING
+ * Test setting the DNS answer count by changing the value,
+ * confirming it matches the expected value, changing it back to the original
+ * value, and confirming that the value matches the original.
+ * This test directly leverages the get function, so this test should
+ * follow the get test suite.
  */
 void test_set_dns_ancount(void) {
     uint16_t new_expected_dns_ancount = 1;
@@ -206,7 +231,8 @@ void test_set_dns_ancount(void) {
 }
 
 /** 
- * TODO DOCSTRING
+ * Test getting the DNS name server records count by comparing it to the
+ * known value of the test message.
  */
 void test_get_dns_nscount(void) {
     uint16_t expected_dns_nscount = 0;
@@ -215,7 +241,11 @@ void test_get_dns_nscount(void) {
 }
 
 /** 
- * TODO DOCSTRING
+ * Test setting the DNS name server records count by changing the value,
+ * confirming it matches the expected value, changing it back to the original
+ * value, and confirming that the value matches the original.
+ * This test directly leverages the get function, so this test should
+ * follow the get test suite.
  */
 void test_set_dns_nscount(void) {
     uint16_t new_expected_dns_nscount = 1;
@@ -231,7 +261,8 @@ void test_set_dns_nscount(void) {
 }
 
 /** 
- * TODO DOCSTRING
+ * Test getting the DNS additional records count by comparing it to the
+ * known value of the test 
  */
 void test_get_dns_arcount(void) {
     uint16_t expected_dns_arcount = 0;
@@ -240,7 +271,11 @@ void test_get_dns_arcount(void) {
 }
 
 /** 
- * TODO DOCSTRING
+ * Test setting the DNS additional records count by changing the value,
+ * confirming it matches the expected value, changing it back to the original
+ * value, and confirming that the value matches the original.
+ * This test directly leverages the get function, so this test should
+ * follow the get test suite.
  */
 void test_set_dns_arcount(void) {
     uint16_t new_expected_dns_arcount = 0;
