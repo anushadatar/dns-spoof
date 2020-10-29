@@ -21,11 +21,11 @@ uint8_t current_packet[DNS_UDP_MAX_SIZE];
 /**
  * Display a usage message when the user specifies an unknown or incorrect
  * argument or uses the -h argument.
- * TODO Fill this in.
 */
 void display_help_message(void)
 {
-    fprintf(stderr, "Run this program with ./dnsspoof, wit");
+    fprintf(stderr, "Run this program with ./dnsspoof. Optionally use -p to specify the port number and -a to specify the IP address,");
+    fprintf(stderr, "Otherwise, the program will default to port 12345 and address 6.6.6.6.");
     exit(1);
 }
 
@@ -79,7 +79,6 @@ void process_incoming_data(int socket, char *default_address_response)
  * param port : The port number associated with the socket.
  * param default_address_response : The hardcoded address to respond to all
  *                                  requests with.
- * TODO remove dependency on sockaddr_in 
 */
 void initialize_data_processing(int port, char *default_address_response)
 {
@@ -135,7 +134,9 @@ int main(int argc, char *argv[])
             break;
         case 'p':
             portnum = strtoul(optarg, &optarg, 0);
-            if (portnum == 0) {
+            if (portnum == 0)
+            {
+                fprintf(stderr, "Port number invalid.");
                 display_help_message();
             }
             break;
@@ -143,7 +144,7 @@ int main(int argc, char *argv[])
             strncpy(default_address_response, optarg, sizeof(default_address_response));
             if (inet_addr(default_address_response) < 0)
             {
-                fprintf(stderr, "Invalid IP address.");
+                fprintf(stderr, "IP address invalid.");
                 display_help_message();
             }
             break;
