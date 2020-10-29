@@ -17,6 +17,9 @@ On localhost:
 
 Other terminal:
     # dig -p 123 @localhost foo.com
+
+Other terminal:
+    # dig -p 123 @localhost foo.com
 ```
 This should return the following response:
 TODO Modify if response approximates assignment more closely.
