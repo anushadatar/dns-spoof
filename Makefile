@@ -6,7 +6,7 @@ flags := -Wall
 # Referenced from https://www.gnu.org/software/make/manual/html_node/Wildcard-Function.html
 target := dnsspoof
 src := $(wildcard src/*.c)
-test-target := dnsspoof-test
+test-target := dnsspoof-check
 test := $(wildcard test/*.c)
 cunit := -lcunit
 
@@ -17,6 +17,7 @@ $(target):
 clean:
 	rm -rf $(target) obj/ 
 
-.PHONY: test
-test:
+.PHONY: check
+check:
 	$(cc) $(test) $(src) $(flags) $(cunit) -D UNIT_TEST -o $(test-target)
+	./dnsspoof-check
