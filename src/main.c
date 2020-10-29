@@ -1,10 +1,6 @@
 /**
- * Block comment here.
- * 
- * 
- * 
+ * Run the DNS spoofing daemon on the user-specified address and port.
  */
-
 // TODO Trim all unnecessary import statements.
 #include <err.h>
 #include <unistd.h>
@@ -21,10 +17,11 @@
 #include "dns_defns.h"
 #include "dns_manager.h"
 
+// Support unit testing the main method.
 #ifdef UNIT_TEST
-  #define main PRODUCTION_MAIN // Break from macro style a little to 
-  #define NUMBER_OF_PACKETS 1
-#endif // If this is a unit test, run
+  #define main PRODUCTION_MAIN // Break from macro style a little.
+  #define NUMBER_OF_PACKETS 1  // Run exactly once for unit tests.
+#endif
 
 // The buffer associated with the current packet the daemon is handling.
 uint8_t current_packet[DNS_UDP_MAX_SIZE];
@@ -40,12 +37,15 @@ void display_help_message(void)
 }
 
 /**
- * Loop through incoming data. TODO comment
- * 
-*/
-void process_incoming_data(int sock, char *default_address_response)
+ * Loop through incoming data sent over the socket, parse the message, modify it
+ * in place with a response, and then send the response over the socket.
+ *
+ * socket : The int number associated with the initialized socket.
+ * default_address_response : The char array holding the hardcoded response.
+ */
+void process_incoming_data(int socket, char *default_address_response)
 {
-    (void) sock;
+    (void) socket;
     struct sockaddr_in client_sin;
     unsigned int client_sin_len;
 
@@ -55,7 +55,7 @@ void process_incoming_data(int sock, char *default_address_response)
     while(number_of_packets < DNS_NUMBER_OF_PACKETS)
     {
         client_sin_len = sizeof(client_sin); // reset the size every time we call recvfrom()
-        received_message_size = recvfrom(sock, current_packet, sizeof(current_packet), 0, (struct sockaddr *)&client_sin, (socklen_t *)&client_sin_len);
+        received_message_size = recvfrom(socket, current_packet, sizeof(current_packet), 0, (struct sockaddr *)&client_sin, (socklen_t *)&client_sin_len);
         // Drop any messages that are smaller than the DNS header size as they are likely invalid.
         if (received_message_size < DNS_HEADER_SIZE) {
             fprintf(stderr, "Received message has insufficient length, dropping message\n");
@@ -65,7 +65,7 @@ void process_incoming_data(int sock, char *default_address_response)
         // If we get some received packet, we can go ahead and respond with it.
         if (new_message_size > DNS_HEADER_SIZE) {
             // TODO Modify this command
-          if (sendto(sock, current_packet, new_message_size, 0, (struct sockaddr *)&client_sin, (socklen_t)(client_sin_len)) != new_message_size)
+          if (sendto(socket, current_packet, new_message_size, 0, (struct sockaddr *)&client_sin, (socklen_t)(client_sin_len)) != new_message_size)
           {
             warn("sendto");
           }
@@ -76,15 +76,16 @@ void process_incoming_data(int sock, char *default_address_response)
         number_of_packets++;
     }
 }
+
 /**
  * Initializes socket and starts processing incoming packets.
  * 
  * param port : The port number associated with the socket.
  * param default_address_response : The hardcoded address to respond to all
  *                                  requests with.
- * TODO remove deepndency on sockaddr_in 
+ * TODO remove dependency on sockaddr_in 
 */
-void initialize_data_processing(long port, char *default_address_response)
+void initialize_data_processing(int port, char *default_address_response)
 {
   (void)port;
   int new_socket;
@@ -110,8 +111,12 @@ void initialize_data_processing(long port, char *default_address_response)
   
 }
 
-/** TODO comment
- * 
+/** 
+ * Parse incoming arguments for the port and address. If the port and address
+ * are specified and valid (or unspecified and therefore default), initialize
+ * the socket and start processing incoming packets. If this method executes in
+ * a unit test, it should process exactly one packet, otherwise it should
+ * continue indefinitely.
  */
 int main(int argc, char *argv[])
 {  
