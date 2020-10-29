@@ -50,3 +50,15 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Vim and VSCode
+*.swp
+*.swo
+*.vscode
+
+# Binaries and testing files
+dnsspoof
+dnsspoof-test
+dnsspoof-debug
+dnsspoof-test-debug
+temp.txt
