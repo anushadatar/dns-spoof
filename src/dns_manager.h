@@ -58,7 +58,7 @@ void set_format_error_flags(uint8_t *message);
  * message : Pointer to the message to set the flags for.
  * returns : Void, modifies the message in place. 
  */
-void set_default_dns_flags(uint8_t* message);
+void set_default_dns_flags(uint8_t *message);
 
 /**
  * Returns the name size of the given question.
@@ -112,7 +112,6 @@ void set_dns_flags(uint8_t *message, uint16_t val);
 
 uint16_t get_dns_qdcount(uint8_t *message);
 
-
 /**
  * Set the DNS QD count which is a 16 bit count of the number 
  * of entries in the question section.
@@ -131,7 +130,6 @@ void set_dns_qdcount(uint8_t *message, uint16_t val);
  */
 uint16_t get_dns_ancount(uint8_t *message);
 
-
 /**
  * Set the DNS AN count which is a 16 bit count of the number 
  * of resource records in the answer section
@@ -140,8 +138,6 @@ uint16_t get_dns_ancount(uint8_t *message);
  * value   : The message's desired AN count, as a uint16_t.
  */
 void set_dns_ancount(uint8_t *message, uint16_t val);
-
-
 
 /**
  * Get the DNS NS count which is a 16 bit count of the number 

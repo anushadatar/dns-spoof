@@ -13,11 +13,12 @@ cunit := -lcunit
 $(target): 
 	$(cc) $(src) $(flags) -o $(target)
 
-.PHONY: clean
-clean:
-	rm -rf $(target) obj/ 
-
 .PHONY: check
 check:
 	$(cc) $(test) $(src) $(flags) $(cunit) -D UNIT_TEST -o $(test-target)
 	./dnsspoof-check
+
+.PHONY: clean
+clean:
+	rm -rf $(target) $(test-target) obj/ 
+

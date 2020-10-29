@@ -13,31 +13,29 @@ On localhost:
     # cd dns-spoof
     # make
     # make check
-    # ./dnsspoof -p 123
+    # sudo ./dnsspoof -p 123
 
 Other terminal:
     # dig -p 123 @localhost foo.com
 ```
 This should return the following response:
-TODO Modify if response approximates assignment more closely.
 ```
 ; <<>> DiG 9.16.1-Ubuntu <<>> -p 123 @localhost foo.com
 ; (1 server found)
 ;; global options: +cmd
 ;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 46090
-;; flags: aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
-;; WARNING: recursion requested but not available
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 13928
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
 
 ;; QUESTION SECTION:
 ;foo.com.			IN	A
 
 ;; ANSWER SECTION:
-foo.com.		60	IN	A	6.6.6.6
+foo.com.		3600	IN	A	6.6.6.6
 
 ;; Query time: 0 msec
 ;; SERVER: 127.0.0.1#123(127.0.0.1)
-;; WHEN: Wed Oct 28 02:16:08 EDT 2020
+;; WHEN: Thu Oct 29 19:05:55 EDT 2020
 ;; MSG SIZE  rcvd: 41
 ```
 ## Design Decisions
@@ -50,6 +48,12 @@ DNS header. That way, I could simply deserialize and serialize incoming packets
 as necessary. However, this quickly felt more high-overhead than expected in
 the context of such a minimal implementation
 
+### Extensions
+If I had additional time and resources to dedicate to this project, I would
+extend this project in two major directions.
+
+- Testing: The testing present here does not 
+- Daemon Functionality: 
 
 ## Resources
 To develop this implementation, I extensively referenced and used the following

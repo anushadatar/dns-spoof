@@ -43,13 +43,14 @@ int cleanup_dns_manager_test_suite(void)
  * TODO DOCSTRING
  */
 void test_add_answers(void) {
-
+    ssize_t expected_message_size = 41;
+    ssize_t computed_message_size = 
 }
 /** 
  * TODO 
  */
 void test_parse_message(void) {
-
+    
 }
 
 /** 
@@ -104,7 +105,6 @@ void test_set_default_dns_flags(void) {
 void test_get_name_size(void) {
     uint8_t expected_name_size = 12;
     uint8_t computed_name_size = get_name_size(test_message + DNS_HEADER_SIZE);
-    fprintf(stderr, "The computed name size is %u", computed_name_size);
     CU_ASSERT_EQUAL(expected_name_size, computed_name_size);
 }
 
@@ -297,10 +297,11 @@ void test_set_dns_arcount(void) {
 */
 int main()
 {
-    fprintf(stdout, "Initialifdsdfzing main method");
     // Initialize the test registry and add the suite to the registry.
+
     CU_pSuite getSuite = NULL;
     CU_pSuite setSuite = NULL;
+    CU_pSuite processSuite = NULL;
     if (CUE_SUCCESS != CU_initialize_registry())
         return CU_get_error();
     // TODO Give the init values 
@@ -334,8 +335,14 @@ int main()
         (NULL == CU_add_test(setSuite, "Test of set_dns_arcount function", test_set_dns_arcount)) || 
         (NULL == CU_add_test(setSuite, "Test of set_not_implemented_flags function", test_set_not_implemented_flags)) ||
         (NULL == CU_add_test(setSuite, "Test of set_format_error_flags function", test_set_format_error_flags)) || 
-        (NULL == CU_add_test(setSuite, "Test of set_default_dns_flags function", test_set_default_dns_flags)))       
-    {
+        (NULL == CU_add_test(setSuite, "Test of set_default_dns_flags function", test_set_default_dns_flags))) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
+
+    // Ensure we can get the expected value after processing..
+    if ((NULL == CU_add_test(setSuite, "Test of add_answers function", test_add_answers)) ||
+        (NULL == CU_add_test(setSuite, "Test of parse_message function", test_parse_message))) {
         CU_cleanup_registry();
         return CU_get_error();
     }
