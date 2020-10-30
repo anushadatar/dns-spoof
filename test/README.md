@@ -1,7 +1,7 @@
 # Testing
 This folder contains tests associated with this project. These tests leverage
 the CUnit framework to validate both the individual functions within the DNS
-manager and the overall functionality of the program itself.
+manager.
 
 ## Run Tests
 To run tests, run the following command:
