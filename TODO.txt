@@ -5,13 +5,7 @@ Testing ->
 - Debug end-to-end test with main
 - Make testing README
 
-Functionality ->
-- Add error checks
-- Test!
-- TODOs in the code
-
 Documentation ->
 - Write up README
 - Add docs to code
-- Style check
-- Formalize DEBUG prints
+- Style chec

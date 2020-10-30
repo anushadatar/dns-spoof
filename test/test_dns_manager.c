@@ -39,17 +39,27 @@ int cleanup_dns_manager_test_suite(void)
 }
 
 /** 
- * TODO DOCSTRING
+ * Test adding answers to the message, and check that the returned message size
+ * matches the expected value.
  */
 void test_add_answers(void)
 {
+    ssize_t message_size = sizeof(test_message);
+    char default_address_response[100] = "6.6.6.6";
+    CU_ASSERT_EQUAL(28, add_answers(test_message + DNS_HEADER_SIZE, get_dns_qdcount(test_message), message_size, default_address_response));
     return;
 }
+
 /** 
- * TODO 
+ * Test the end-tp-end message parsing function to ensure that the output
+ * message response size matches the expected value.
+ * TODO Debug this error
  */
 void test_parse_message(void)
 {
+    char default_address_response[100] = "6.6.6.6";
+    ssize_t parsed_message_size = parse_message(test_message, sizeof(test_message), default_address_response);
+    CU_ASSERT_EQUAL(28, parsed_message_size);
     return;
 }
 
@@ -323,7 +333,7 @@ int main()
     setSuite = CU_add_suite("DNS Manager Set Tests", initialize_dns_manager_test_suite, cleanup_dns_manager_test_suite);
     processSuite = CU_add_suite("DNS Processing Set Tests", initialize_dns_manager_test_suite, cleanup_dns_manager_test_suite);
 
-    if (NULL == getSuite)
+    if (NULL == getSuite || NULL == setSuite || NULL == processSuite)
     {
         CU_cleanup_registry();
         return CU_get_error();

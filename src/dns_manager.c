@@ -90,6 +90,7 @@ ssize_t parse_message(uint8_t *message, ssize_t message_size, char *default_addd
     // If the message is a response, drop it.
     if (get_dns_flags(message) & DNS_FLAG_QR)
     {
+        fprintf(stderr, "error");
         return 0;
     }
 
