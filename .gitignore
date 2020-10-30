@@ -58,7 +58,5 @@ dkms.conf
 
 # Binaries and testing files
 dnsspoof
-dnsspoof-test
-dnsspoof-debug
-dnsspoof-test-debug
+dnsspoof-check
 temp.txt

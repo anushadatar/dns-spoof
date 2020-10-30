@@ -4,7 +4,8 @@ This repository contains a minimal DNS spoofing daemon. For any A record
 request it returns a hard-coded address value that the user can configure
 from the command line.
 
-## Architecture 
+## Architecture
+This minimal implementation
 
 ## Running and Testing
 The workflow to demonstrate the functionality associated with this daemon matches the specifications in the assignment as such:
@@ -18,7 +19,7 @@ On localhost:
 Other terminal:
     # dig -p 123 @localhost foo.com
 ```
-This should return the following response:
+This should return the following response in the other terminal.
 ```
 ; <<>> DiG 9.16.1-Ubuntu <<>> -p 123 @localhost foo.com
 ; (1 server found)
@@ -46,14 +47,21 @@ incoming packets. Upon reading the DNS specification, my first thought was to
 create a struct where each field corresponded to a different value within the
 DNS header. That way, I could simply deserialize and serialize incoming packets
 as necessary. However, this quickly felt more high-overhead than expected in
-the context of such a minimal implementation
+the context of such a minimal implementation: as all I needed to do was
+manipulate a few fields, I elected to just modify the message in place and then
+send it back. That being said, at a larger scale, a more regulated 
 
 ### Extensions
 If I had additional time and resources to dedicate to this project, I would
 extend this project in two major directions.
 
-- Testing: The testing present here does not 
-- Daemon Functionality: 
+- Error Checking and Testing: The testing present here does not necessarily
+  encapsulate all use cases and potential opportunities for user error.
+  For example, none of the set methods validate if the input value for the 
+
+- Daemon Functionality: This daemon does not implement the entirety of the DNS
+  specification, and further development could help approach that level of
+  functionality.
 
 ## Resources
 To develop this implementation, I extensively referenced and used the following

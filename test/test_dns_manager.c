@@ -15,19 +15,18 @@
 // https://wiki.wireshark.org/SampleCaptures and generated integer values
 // for validation with https://www.scadacore.com/tools/programming-calculators/online-hex-converter/.
 uint8_t test_message[] = {
-  0x10, 0x32, 0x01, 0x00, 0x00, 0x01, 0x00, 0x00,
-  0x00, 0x00, 0x00, 0x00, 0x06, 0x67, 0x6f, 0x6f,
-  0x67, 0x6c, 0x65, 0x03, 0x63, 0x6f, 0x6d, 0x00,
-  0x00, 0x10, 0x00, 0x01
-};
+    0x10, 0x32, 0x01, 0x00, 0x00, 0x01, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x06, 0x67, 0x6f, 0x6f,
+    0x67, 0x6c, 0x65, 0x03, 0x63, 0x6f, 0x6d, 0x00,
+    0x00, 0x10, 0x00, 0x01};
 
 /**
  * Start the DNS manager test suite.
  */
 int initialize_dns_manager_test_suite(void)
 {
-   fprintf(stdout, "Starting DNS Manager Tests.");
-   return 0;
+    fprintf(stdout, "\nStarting DNS Manager Tests.");
+    return 0;
 }
 
 /** 
@@ -35,22 +34,23 @@ int initialize_dns_manager_test_suite(void)
  */
 int cleanup_dns_manager_test_suite(void)
 {
-   fprintf(stdout, "Completing DNS Manager Tests.");
-   return 0;
+    fprintf(stdout, "\nCompleting DNS Manager Tests.");
+    return 0;
 }
 
 /** 
  * TODO DOCSTRING
  */
-void test_add_answers(void) {
-    ssize_t expected_message_size = 41;
-    ssize_t computed_message_size = 
+void test_add_answers(void)
+{
+    return;
 }
 /** 
  * TODO 
  */
-void test_parse_message(void) {
-    
+void test_parse_message(void)
+{
+    return;
 }
 
 /** 
@@ -59,7 +59,8 @@ void test_parse_message(void) {
  * This test directly leverages the get function, so this test should
  * follow the get test suite.
  */
-void test_set_not_implemented_flags(void) {
+void test_set_not_implemented_flags(void)
+{
     uint16_t expected_not_implemented_flags = 32769;
     set_format_error_flags(test_message);
     uint16_t extracted_dns_flags = get_dns_flags(test_message);
@@ -72,12 +73,12 @@ void test_set_not_implemented_flags(void) {
  * This test directly leverages the get function, so this test should
  * follow the get test suite.
  */
-void test_set_format_error_flags(void) {
+void test_set_format_error_flags(void)
+{
     uint16_t expected_format_error_flags = 32772;
     set_not_implemented_flags(test_message);
     uint16_t extracted_dns_flags = get_dns_flags(test_message);
     CU_ASSERT_EQUAL(expected_format_error_flags, extracted_dns_flags);
-
 }
 
 /** 
@@ -86,8 +87,9 @@ void test_set_format_error_flags(void) {
  * This test directly leverages the get function, so this test should
  * follow the get test suite.
  */
-void test_set_default_dns_flags(void) {
-    uint16_t expected_default_flags = 33792;
+void test_set_default_dns_flags(void)
+{
+    uint16_t expected_default_flags = 33152;
     set_default_dns_flags(test_message);
     uint16_t extracted_dns_flags = get_dns_flags(test_message);
     CU_ASSERT_EQUAL(expected_default_flags, extracted_dns_flags);
@@ -102,7 +104,8 @@ void test_set_default_dns_flags(void) {
  * in cases with multiple queries. That being said, the usual number of queries
  * is one (1) as noted in RFC 1035 4.1.2.
  */
-void test_get_name_size(void) {
+void test_get_name_size(void)
+{
     uint8_t expected_name_size = 12;
     uint8_t computed_name_size = get_name_size(test_message + DNS_HEADER_SIZE);
     CU_ASSERT_EQUAL(expected_name_size, computed_name_size);
@@ -112,7 +115,8 @@ void test_get_name_size(void) {
  * Test getting the DNS ID by comparing it to the
  * known value of the test message. 
  */
-void test_get_dns_id(void) {
+void test_get_dns_id(void)
+{
     uint16_t expected_dns_id = 4146;
     uint16_t extracted_dns_id = get_dns_id(test_message);
     CU_ASSERT_EQUAL(expected_dns_id, extracted_dns_id);
@@ -125,12 +129,13 @@ void test_get_dns_id(void) {
  * This test directly leverages the get function, so this test should
  * follow the get test suite.
  */
-void test_set_dns_id(void) {
+void test_set_dns_id(void)
+{
     uint16_t new_expected_dns_id = 4147;
     set_dns_id(test_message, new_expected_dns_id);
     uint16_t new_extracted_dns_id = get_dns_id(test_message);
     CU_ASSERT_EQUAL(new_expected_dns_id, new_extracted_dns_id);
-    
+
     // Reset back to the original value.
     uint16_t expected_dns_id = 4146;
     set_dns_id(test_message, expected_dns_id);
@@ -142,11 +147,11 @@ void test_set_dns_id(void) {
  * Test getting the DNS flags by comparing it to the
  * known value of the test message. 
  */
-void test_get_dns_flags(void) {
+void test_get_dns_flags(void)
+{
     uint16_t expected_dns_flags = 0x0100;
     uint16_t extracted_dns_flags = get_dns_flags(test_message);
     CU_ASSERT_EQUAL(expected_dns_flags, extracted_dns_flags);
-
 }
 
 /** 
@@ -156,25 +161,26 @@ void test_get_dns_flags(void) {
  * This test directly leverages the get function, so this test should
  * follow the get test suite.
  */
-void test_set_dns_flags(void) {
+void test_set_dns_flags(void)
+{
     uint16_t new_expected_dns_flags = 0x0120;
     set_dns_flags(test_message, new_expected_dns_flags);
     uint16_t new_extracted_dns_flags = get_dns_flags(test_message);
     CU_ASSERT_EQUAL(new_expected_dns_flags, new_extracted_dns_flags);
-    
+
     // Reset back to the original value.
     uint16_t expected_dns_flags = 0x0100;
     set_dns_flags(test_message, expected_dns_flags);
     uint16_t extracted_dns_flags = get_dns_flags(test_message);
     CU_ASSERT_EQUAL(expected_dns_flags, extracted_dns_flags);
-
 }
 
 /** 
  * Test getting the DNS question count by comparing it to the
  * known value of the test message. 
  */
-void test_get_dns_qdcount(void) {
+void test_get_dns_qdcount(void)
+{
     uint16_t expected_dns_qdcount = 1;
     uint16_t extracted_dns_qdcount = get_dns_qdcount(test_message);
     CU_ASSERT_EQUAL(expected_dns_qdcount, extracted_dns_qdcount);
@@ -187,12 +193,13 @@ void test_get_dns_qdcount(void) {
  * This test directly leverages the get function, so this test should
  * follow the get test suite.
  */
-void test_set_dns_qdcount(void) {
+void test_set_dns_qdcount(void)
+{
     uint16_t new_expected_dns_qdcount = 2;
     set_dns_qdcount(test_message, new_expected_dns_qdcount);
     uint16_t new_extracted_dns_qdcount = get_dns_qdcount(test_message);
     CU_ASSERT_EQUAL(new_expected_dns_qdcount, new_extracted_dns_qdcount);
-    
+
     // Reset back to the original value.
     uint16_t expected_dns_qdcount = 1;
     set_dns_qdcount(test_message, expected_dns_qdcount);
@@ -204,7 +211,8 @@ void test_set_dns_qdcount(void) {
  * Test getting the DNS answer count by comparing it to the
  * known value of the test message.
  */
-void test_get_dns_ancount(void) {
+void test_get_dns_ancount(void)
+{
     uint16_t expected_dns_ancount = 0;
     uint16_t extracted_dns_ancount = get_dns_ancount(test_message);
     CU_ASSERT_EQUAL(expected_dns_ancount, extracted_dns_ancount);
@@ -217,12 +225,13 @@ void test_get_dns_ancount(void) {
  * This test directly leverages the get function, so this test should
  * follow the get test suite.
  */
-void test_set_dns_ancount(void) {
+void test_set_dns_ancount(void)
+{
     uint16_t new_expected_dns_ancount = 1;
     set_dns_ancount(test_message, new_expected_dns_ancount);
     uint16_t new_extracted_dns_ancount = get_dns_ancount(test_message);
     CU_ASSERT_EQUAL(new_expected_dns_ancount, new_extracted_dns_ancount);
-    
+
     // Reset back to the original value.
     uint16_t expected_dns_ancount = 0;
     set_dns_ancount(test_message, expected_dns_ancount);
@@ -234,7 +243,8 @@ void test_set_dns_ancount(void) {
  * Test getting the DNS name server records count by comparing it to the
  * known value of the test message.
  */
-void test_get_dns_nscount(void) {
+void test_get_dns_nscount(void)
+{
     uint16_t expected_dns_nscount = 0;
     uint16_t extracted_dns_nscount = get_dns_nscount(test_message);
     CU_ASSERT_EQUAL(expected_dns_nscount, extracted_dns_nscount);
@@ -247,12 +257,13 @@ void test_get_dns_nscount(void) {
  * This test directly leverages the get function, so this test should
  * follow the get test suite.
  */
-void test_set_dns_nscount(void) {
+void test_set_dns_nscount(void)
+{
     uint16_t new_expected_dns_nscount = 1;
     set_dns_nscount(test_message, new_expected_dns_nscount);
     uint16_t new_extracted_dns_nscount = get_dns_nscount(test_message);
     CU_ASSERT_EQUAL(new_expected_dns_nscount, new_extracted_dns_nscount);
-    
+
     // Reset back to the original value.
     uint16_t expected_dns_nscount = 0;
     set_dns_nscount(test_message, expected_dns_nscount);
@@ -264,7 +275,8 @@ void test_set_dns_nscount(void) {
  * Test getting the DNS additional records count by comparing it to the
  * known value of the test 
  */
-void test_get_dns_arcount(void) {
+void test_get_dns_arcount(void)
+{
     uint16_t expected_dns_arcount = 0;
     uint16_t extracted_dns_arcount = get_dns_arcount(test_message);
     CU_ASSERT_EQUAL(expected_dns_arcount, extracted_dns_arcount);
@@ -277,12 +289,13 @@ void test_get_dns_arcount(void) {
  * This test directly leverages the get function, so this test should
  * follow the get test suite.
  */
-void test_set_dns_arcount(void) {
+void test_set_dns_arcount(void)
+{
     uint16_t new_expected_dns_arcount = 0;
     set_dns_arcount(test_message, new_expected_dns_arcount);
     uint16_t new_extracted_dns_arcount = get_dns_nscount(test_message);
     CU_ASSERT_EQUAL(new_expected_dns_arcount, new_extracted_dns_arcount);
-    
+
     // Reset back to the original value.
     uint16_t expected_dns_arcount = 0;
     set_dns_arcount(test_message, expected_dns_arcount);
@@ -304,11 +317,14 @@ int main()
     CU_pSuite processSuite = NULL;
     if (CUE_SUCCESS != CU_initialize_registry())
         return CU_get_error();
-    // TODO Give the init values 
+
+    // Initialize all three test suites.
     getSuite = CU_add_suite("DNS Manager Get Tests", initialize_dns_manager_test_suite, cleanup_dns_manager_test_suite);
     setSuite = CU_add_suite("DNS Manager Set Tests", initialize_dns_manager_test_suite, cleanup_dns_manager_test_suite);
-    
-    if (NULL == getSuite) {
+    processSuite = CU_add_suite("DNS Processing Set Tests", initialize_dns_manager_test_suite, cleanup_dns_manager_test_suite);
+
+    if (NULL == getSuite)
+    {
         CU_cleanup_registry();
         return CU_get_error();
     }
@@ -320,7 +336,8 @@ int main()
         (NULL == CU_add_test(getSuite, "Test of get_dns_ancount function", test_get_dns_ancount)) ||
         (NULL == CU_add_test(getSuite, "Test of get_dns_nscount function", test_get_dns_nscount)) ||
         (NULL == CU_add_test(getSuite, "Test of get_dns_arcount function", test_get_dns_arcount)) ||
-        (NULL == CU_add_test(getSuite, "Test of get_name_size function", test_get_name_size))) {
+        (NULL == CU_add_test(getSuite, "Test of get_name_size function", test_get_name_size)))
+    {
         CU_cleanup_registry();
         return CU_get_error();
     }
@@ -332,17 +349,19 @@ int main()
         (NULL == CU_add_test(setSuite, "Test of set_dns_qdcount function", test_set_dns_qdcount)) ||
         (NULL == CU_add_test(setSuite, "Test of set_dns_ancount function", test_set_dns_ancount)) ||
         (NULL == CU_add_test(setSuite, "Test of set_dns_nscount function", test_set_dns_nscount)) ||
-        (NULL == CU_add_test(setSuite, "Test of set_dns_arcount function", test_set_dns_arcount)) || 
+        (NULL == CU_add_test(setSuite, "Test of set_dns_arcount function", test_set_dns_arcount)) ||
         (NULL == CU_add_test(setSuite, "Test of set_not_implemented_flags function", test_set_not_implemented_flags)) ||
-        (NULL == CU_add_test(setSuite, "Test of set_format_error_flags function", test_set_format_error_flags)) || 
-        (NULL == CU_add_test(setSuite, "Test of set_default_dns_flags function", test_set_default_dns_flags))) {
+        (NULL == CU_add_test(setSuite, "Test of set_format_error_flags function", test_set_format_error_flags)) ||
+        (NULL == CU_add_test(setSuite, "Test of set_default_dns_flags function", test_set_default_dns_flags)))
+    {
         CU_cleanup_registry();
         return CU_get_error();
     }
 
     // Ensure we can get the expected value after processing..
-    if ((NULL == CU_add_test(setSuite, "Test of add_answers function", test_add_answers)) ||
-        (NULL == CU_add_test(setSuite, "Test of parse_message function", test_parse_message))) {
+    if ((NULL == CU_add_test(processSuite, "Test of add_answers function", test_add_answers)) ||
+        (NULL == CU_add_test(processSuite, "Test of parse_message function", test_parse_message)))
+    {
         CU_cleanup_registry();
         return CU_get_error();
     }
