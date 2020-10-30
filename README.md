@@ -4,7 +4,7 @@ This repository contains a minimal DNS spoofing daemon. For any A record
 request it returns a hard-coded address value that the user can configure
 from the command line.
 
-## Architecture
+## Description
 This minimal implementation closely follows the DNS specification (RFC 1035) to
 realize a DNS spoofing daemon capable of responding to simple quieries by
 parsing incoming messages received over a specified socket. 
@@ -16,8 +16,9 @@ will automatically respond with as such:
 ```
 sudo ./dnsspoof -a [DEFAULT_ADDRESS] -p [PORT_NUMBER]
 ```
-From there, incoming queries on that port will receive a responses including that
-default address.
+This will initialize a socket on the the given port that will listen for
+incoming DNS queries. From there, incoming queries on that port will receive
+a minimal response including that default address. 
 
 ## Running and Testing
 The workflow to demonstrate the functionality associated with this daemon
@@ -66,11 +67,11 @@ project.
   tightly codified system that leverages frameworks such as structs would
   likely make sense. To make it easier to change the values of flags, I did
   some manual precomputation and stored values in the `dns_defns` header.
-- I decided what functionality from within the DNS spec I ought to maintain and
-  what functionality I could discard. I chose to prioritize including features
-  that allowed me to realize the functionality associated with assigning the
-  hardcoded address value to any input.
-
+- I decided what functionality from within the DNS specification I ought to
+  maintain and what functionality I could discard. I chose to prioritize
+  including features that allowed me to realize the functionality associated 
+  with respondong to queries  
+   
 ### Extensions
 If I had additional time and resources to dedicate to this project, I would
 extend this project in two major directions.
@@ -79,11 +80,16 @@ extend this project in two major directions.
   encapsulate all use cases and potential opportunities for user error.
   For example, none of the set methods validate if the input value for the
   parameter is appropriate for the application (beyond its datatype). There
-  are also fairly few end-to-end testing methods, and I ought to add those.
+  also is currently no testing associated with the main method itself or some
+  of the larger methods. For the more comprehensive management methods, I could
+  hand-make a sample query and response (or use Wireshark and capture an expected
+  query and response) and sure that my functions return those values as well. I 
+  may need to use a more sophisticated testing framework, such as [cmocka](https://cmocka.org/) 
+  to cleanly complete tests that involve executing the main method.
 
-- Daemon Functionality: This daemon does not implement the entirety of the DNS
-  specification, and further development could help approach that level of
-  functionality.
+- Daemon Functionality: This daemon could support additional components of the
+  DNS specification and more sophisticated user interface features (like supporting
+  loading a configuration file for address redirection).
 
 ## Resources
 To develop this implementation, I extensively referenced and used the following
@@ -100,4 +106,4 @@ resources:
 - [Makefile Documentation](https://www.gnu.org/software/make/manual/make.html)
 
 I cite any other specific references I used (i.e. forum links for specific
-commands) are linked in comments within the files.
+commands) in the comments within specific files.
