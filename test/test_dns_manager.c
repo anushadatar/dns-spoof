@@ -50,34 +50,6 @@ void test_add_answers(void)
 }
 
 /** 
- * Test setting the DNS flags to impl error by changing the value to 
- * the impl error and confirming it matches the expected value.
- * This test directly leverages the get function, so this test should
- * follow the get test suite.
- */
-void test_set_not_implemented_flags(void)
-{
-    uint16_t expected_not_implemented_flags = 32769;
-    set_format_error_flags(test_message);
-    uint16_t extracted_dns_flags = get_dns_flags(test_message);
-    CU_ASSERT_EQUAL(expected_not_implemented_flags, extracted_dns_flags);
-}
-
-/** 
- * Test setting the DNS flags to format error by changing the value to 
- * the format error and confirming it matches the expected value.
- * This test directly leverages the get function, so this test should
- * follow the get test suite.
- */
-void test_set_format_error_flags(void)
-{
-    uint16_t expected_format_error_flags = 32772;
-    set_not_implemented_flags(test_message);
-    uint16_t extracted_dns_flags = get_dns_flags(test_message);
-    CU_ASSERT_EQUAL(expected_format_error_flags, extracted_dns_flags);
-}
-
-/** 
  * Test setting the DNS flags to the default by changing the value to 
  * the default and confirming it matches the expected value.
  * This test directly leverages the get function, so this test should
@@ -346,17 +318,15 @@ int main()
         (NULL == CU_add_test(setSuite, "Test of set_dns_ancount function", test_set_dns_ancount)) ||
         (NULL == CU_add_test(setSuite, "Test of set_dns_nscount function", test_set_dns_nscount)) ||
         (NULL == CU_add_test(setSuite, "Test of set_dns_arcount function", test_set_dns_arcount)) ||
-        (NULL == CU_add_test(setSuite, "Test of set_not_implemented_flags function", test_set_not_implemented_flags)) ||
-        (NULL == CU_add_test(setSuite, "Test of set_format_error_flags function", test_set_format_error_flags)) ||
         (NULL == CU_add_test(setSuite, "Test of set_default_dns_flags function", test_set_default_dns_flags)))
     {
         CU_cleanup_registry();
         return CU_get_error();
     }
 
-    // Ensure we can get the expected value after processing..
-    if ((NULL == CU_add_test(processSuite, "Test of add_answers function", test_add_answers)) ||
-        (NULL == CU_add_test(processSuite, "Test of parse_message function", test_parse_message)))
+    // Ensure we can get the expected value after processing. This would be a
+    // good place for additional testing methods.
+    if ((NULL == CU_add_test(processSuite, "Test of add_answers function", test_add_answers)))
     {
         CU_cleanup_registry();
         return CU_get_error();

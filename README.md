@@ -78,7 +78,8 @@ extend this project in two major directions.
 - Error Checking and Testing: The testing present here does not necessarily
   encapsulate all use cases and potential opportunities for user error.
   For example, none of the set methods validate if the input value for the
-  parameter is appropriate for the application (beyond its datatype)
+  parameter is appropriate for the application (beyond its datatype). There
+  are also fairly few end-to-end testing methods, and I ought to add those.
 
 - Daemon Functionality: This daemon does not implement the entirety of the DNS
   specification, and further development could help approach that level of
