@@ -49,7 +49,8 @@
 // The Time To Live, can be modified as needed.
 #define DNS_TTL 3600
 
-// The number of packets to process
+// The number of packets to process. May be useful in the context
+// of unit testing.
 #define DNS_NUMBER_OF_PACKETS 1000
 
 #endif // DNS_DEFNS_H

@@ -9,12 +9,6 @@
 #include "dns_defns.h"
 #include "dns_manager.h"
 
-// Support unit testing the main method.
-#ifdef UNIT_TEST
-#define main PRODUCTION_MAIN // Break from macro style a little.
-#define NUMBER_OF_PACKETS 1  // Run exactly once for unit tests.
-#endif
-
 // The buffer associated with the current packet the daemon is handling.
 uint8_t current_packet[DNS_UDP_MAX_SIZE];
 
