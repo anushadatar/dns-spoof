@@ -147,6 +147,7 @@ void set_format_error_flags(uint8_t *message)
 
 void set_default_dns_flags(uint8_t *message)
 {
+    // Defaults from assignment.
     uint16_t flags = get_dns_flags(message);
     flags &= ~DNS_FLAG_AA;
     flags |= DNS_FLAG_QR;

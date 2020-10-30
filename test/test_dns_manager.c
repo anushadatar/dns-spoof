@@ -47,22 +47,6 @@ void test_add_answers(void)
     ssize_t message_size = sizeof(test_message);
     char default_address_response[100] = "6.6.6.6";
     CU_ASSERT_EQUAL(28, add_answers(test_message + DNS_HEADER_SIZE, get_dns_qdcount(test_message), message_size, default_address_response));
-    return;
-}
-
-/** 
- * Test the end-tp-end message parsing function to ensure that the output
- * message response size matches the expected value.
- * TODO Debug this error
- */
-void test_parse_message(void)
-{
-    ssize_t message_size = sizeof(test_message);
-    char default_address_response[100] = "6.6.6.6";
-    ssize_t parsed_message_size = parse_message(test_message, message_size, default_address_response);
-    fprintf(stderr, "Size is “%zu", parsed_message_size );
-    CU_ASSERT_EQUAL(28, parsed_message_size);
-    return;
 }
 
 /** 

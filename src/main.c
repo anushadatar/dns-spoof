@@ -12,6 +12,10 @@
 // The buffer associated with the current packet the daemon is handling.
 uint8_t current_packet[DNS_UDP_MAX_SIZE];
 
+#ifdef UNIT_TEST
+#define main PRODUCTION_MAIN // Break from macro style a little.
+#endif
+
 /**
  * Display a usage message when the user specifies an unknown or incorrect
  * argument or uses the -h argument.
