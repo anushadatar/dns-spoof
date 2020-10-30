@@ -5,8 +5,19 @@ request it returns a hard-coded address value that the user can configure
 from the command line.
 
 ## Architecture
-This minimal implementation closely follows the DNS specification (RFC 1035)
-such that it provides 
+This minimal implementation closely follows the DNS specification (RFC 1035) to
+realize a DNS spoofing daemon capable of responding to simple quieries by
+parsing incoming messages received over a specified socket. 
+
+
+When initializing the program, the user can choose to provide values for the
+port number on which the daemon operates and/or the hardcoded address the daemon
+will automatically respond with as such:
+```
+sudo ./dnsspoof -a [DEFAULT_ADDRESS] -p [PORT_NUMBER]
+```
+From there, incoming queries on that port will receive a responses including that
+default address.
 
 ## Running and Testing
 The workflow to demonstrate the functionality associated with this daemon
@@ -53,7 +64,8 @@ project.
   to do wasmanipulate a few fields, I elected to just modify the message in
   place and then send it back. That being said, at a larger scale, a more
   tightly codified system that leverages frameworks such as structs would
-  likely make sense.
+  likely make sense. To make it easier to change the values of flags, I did
+  some manual precomputation and stored values in the `dns_defns` header.
 - I decided what functionality from within the DNS spec I ought to maintain and
   what functionality I could discard. I chose to prioritize including features
   that allowed me to realize the functionality associated with assigning the

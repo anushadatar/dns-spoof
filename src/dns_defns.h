@@ -8,9 +8,6 @@
 
 #include <stdint.h>
 
-// Total header size, as specified in RFC 1035 4.1.1.
-#define DNS_HEADER_SIZE 12
-
 // Each item's position in the header, as specified in RFC 1035 4.1.1.
 #define DNS_POSITION_ID 0
 #define DNS_POSITION_FLAGS 2
@@ -19,14 +16,15 @@
 #define DNS_POSITION_NSCOUNT 8
 #define DNS_POSITION_ARCOUNT 10
 
-// Size parameters, as specified in RFC 1035 2.3.4.
-#define DNS_TTL_LIMIT 60 // Can be modified according to system reqs.
+// Size parameters, as specified in RFC 1035 2.3.4. and 4.1.1.
+#define DNS_HEADER_SIZE 12
 #define DNS_NAME_MAX_SIZE 255
 #define DNS_UDP_MAX_SIZE 255
 #define DNS_LABEL_MAX_SIZE 63
 
 // Flag definitions for manipulation of entire vector.
 // Defined in RFC 1035 4.1.4.
+// Precalculation strategy from https://stackoverflow.com/questions/14717497/what-is-the-most-performant-correct-way-of-doing-a-bit-shift-mask
 #define DNS_FLAG_QR 0x8000
 #define DNS_FLAG_OPCODE 0x7400
 #define DNS_FLAG_AA 0x0400

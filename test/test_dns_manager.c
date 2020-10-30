@@ -57,8 +57,10 @@ void test_add_answers(void)
  */
 void test_parse_message(void)
 {
+    ssize_t message_size = sizeof(test_message);
     char default_address_response[100] = "6.6.6.6";
-    ssize_t parsed_message_size = parse_message(test_message, sizeof(test_message), default_address_response);
+    ssize_t parsed_message_size = parse_message(test_message, message_size, default_address_response);
+    fprintf(stderr, "Size is “%zu", parsed_message_size );
     CU_ASSERT_EQUAL(28, parsed_message_size);
     return;
 }

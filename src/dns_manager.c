@@ -90,7 +90,7 @@ ssize_t parse_message(uint8_t *message, ssize_t message_size, char *default_addd
     // If the message is a response, drop it.
     if (get_dns_flags(message) & DNS_FLAG_QR)
     {
-        fprintf(stderr, "error");
+        fprintf(stderr, "Message is a response, dropping packet.");
         return 0;
     }
 
@@ -133,7 +133,7 @@ void set_not_implemented_flags(uint8_t *message)
 {
     uint16_t flags = get_dns_flags(message);
     flags &= ~DNS_FLAG_RCODE_MASK;
-    flags = DNS_FLAG_QR | DNS_FLAG_RCODE_NOT_IMPLEMENTED;
+    flags |= DNS_FLAG_RCODE_NOT_IMPLEMENTED | DNS_FLAG_QR;
     set_dns_flags(message, flags);
 }
 
@@ -141,7 +141,7 @@ void set_format_error_flags(uint8_t *message)
 {
     uint16_t flags = get_dns_flags(message);
     flags &= ~DNS_FLAG_RCODE_MASK;
-    flags = DNS_FLAG_QR | DNS_FLAG_RCODE_FORMAT_ERROR;
+    flags |= DNS_FLAG_RCODE_FORMAT_ERROR | DNS_FLAG_QR;
     set_dns_flags(message, flags);
 }
 
