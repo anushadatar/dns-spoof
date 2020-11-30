@@ -1,17 +1,17 @@
-# DNS Spoofing Daemon
+# DNS Spoofing Program
 
-This repository contains a minimal DNS spoofing daemon. For any A record
+This repository contains a minimal DNS spoofing program. For any A record
 request it returns a hard-coded address value that the user can configure
 from the command line.
 
 ## Description
 This minimal implementation closely follows the DNS specification (RFC 1035) to
-realize a DNS spoofing daemon capable of responding to simple quieries by
+realize a DNS spoofing program capable of responding to simple quieries by
 parsing incoming messages received over a specified socket. 
 
 
 When initializing the program, the user can choose to provide values for the
-port number on which the daemon operates and/or the hardcoded address the daemon
+port number on which the program operates and/or the hardcoded address the program
 will automatically respond with as such:
 ```
 sudo ./dnsspoof -a [DEFAULT_ADDRESS] -p [PORT_NUMBER]
@@ -21,7 +21,7 @@ incoming DNS queries. From there, incoming queries on that port will receive
 a minimal response including that default address. 
 
 ## Running and Testing
-The workflow to demonstrate the functionality associated with this daemon
+The workflow to demonstrate the functionality associated with this program
 matches the specifications in the assignment as such:
 ```
 On localhost:
@@ -87,7 +87,7 @@ extend this project in two major directions.
   may need to use a more sophisticated testing framework, such as [cmocka](https://cmocka.org/) 
   to cleanly complete tests that involve executing the main method.
 
-- Daemon Functionality: This daemon could support additional components of the
+- Program Functionality: This program could support additional components of the
   DNS specification and more sophisticated user interface features (like supporting
   loading a configuration file for address redirection).
 
